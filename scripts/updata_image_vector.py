@@ -1,5 +1,5 @@
 from clip_embeding import clip_embeding
-from milvus_operator import restnet_image, MilvusOperator
+from milvus_operator import text_image_vector, MilvusOperator
 from PIL import Image
 import os
 
@@ -37,5 +37,5 @@ def update_image_vector(data_path, operator: MilvusOperator):
 
 if __name__ == '__main__':
     data_dir = 'D:/dataset/fruit'
-    update_image_vector(data_dir, restnet_image)
+    update_image_vector(data_dir, text_image_vector)
 
