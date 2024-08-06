@@ -6,7 +6,7 @@ class MilvusOperator:
         self.database = database
         self.coll_name = collection
         self.metric_type = metric_type
-        self.connect = connections.connect(alias="default", host='192.168.1.156', port='19530')
+        self.connect = connections.connect(alias="default", host='10.66.12.37', port='19530')
         db.using_database(database)
 
     def insert_data(self, data):

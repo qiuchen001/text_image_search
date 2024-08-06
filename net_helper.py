@@ -13,6 +13,7 @@ class NetHelper:
             IP = st.getsockname()[0]
         except Exception:
             IP = '127.0.0.1'
+            # IP = '10.66.8.51'
         finally:
             st.close()
         return IP

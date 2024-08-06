@@ -9,7 +9,7 @@ class ClipEmbeding:
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     def __init__(self):
-        self.model, self.processor = clip.load("D:/models/clip/ViT-L-14-336px.pt", device=self.device)
+        self.model, self.processor = clip.load(r"E:\workspace\ai-ground\models\ViT-L-14-336px.pt", device=self.device)
         self.tokenizer = clip.tokenize
 
         self.transform = transforms.Compose([transforms.Resize((224, 224)),

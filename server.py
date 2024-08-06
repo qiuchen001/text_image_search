@@ -9,13 +9,21 @@ from milvus_operator import text_image_vector
 
 def image_search(text):
     if text is None:
+        print("没有任何输入！")
         return None
+
+    # text = 'one apple'
 
     # clip编码
     imput_embeding = clip_embeding.embeding_text(text)
     imput_embeding = imput_embeding[0].detach().cpu().numpy()
 
+    print("imput_embeding:", imput_embeding)
+
     results = text_image_vector.search_data(imput_embeding)
+
+    print("results:", results)
+
     pil_images = [Image.open(result['path']) for result in results]
     return pil_images
 
@@ -30,6 +38,7 @@ if __name__ == "__main__":
     app = gr.Blocks(theme='default', title="image",
                     css=".gradio-container, .gradio-container button {background-color: #009FCC} "
                         "footer {visibility: hidden}")
+
     with app:
         with gr.Tabs():
             with gr.TabItem("image search"):
@@ -38,13 +47,14 @@ if __name__ == "__main__":
                         text = gr.TextArea(label="Text",
                                            placeholder="description",
                                            value="",)
-                        btn = gr.Button(label="search")
+                        btn = gr.Button(value="search")
 
                     with gr.Column():
                         with gr.Row():
-                            output_images = [gr.outputs.Image(type="pil", label=None) for _ in range(16)]
+                            output_images = [gr.components.Image(type="pil", label=None) for _ in range(16)]
 
                 btn.click(image_search, inputs=[text], outputs=output_images, show_progress=True)
 
     ip_addr = net_helper.get_host_ip()
-    app.queue(concurrency_count=3).launch(show_api=False, share=True, server_name=ip_addr, server_port=9099)
+    # app.queue(concurrency_count=3).launch(show_api=False, share=True, server_name=ip_addr, server_port=9099)
+    app.queue().launch(show_api=False, share=True, server_name=ip_addr, server_port=9099)

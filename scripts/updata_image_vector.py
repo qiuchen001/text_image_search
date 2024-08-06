@@ -16,7 +16,8 @@ def update_image_vector(data_path, operator: MilvusOperator):
             embeding = clip_embeding.embeding_image(image)
 
             idxs.append(total_count)
-            embedings.append(embeding[0].detach().numpy().tolist())
+            #embedings.append(embeding[0].detach().numpy().tolist())
+            embedings.append(embeding[0].detach().cpu().numpy().tolist())
             paths.append(os.path.join(sub_dir, file))
             total_count += 1
 
@@ -36,6 +37,6 @@ def update_image_vector(data_path, operator: MilvusOperator):
 
 
 if __name__ == '__main__':
-    data_dir = 'D:/dataset/fruit'
+    data_dir = r'E:\workspace\ai-ground\dataset\fruit'
     update_image_vector(data_dir, text_image_vector)
 
