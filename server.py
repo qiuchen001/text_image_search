@@ -3,7 +3,8 @@ import torch
 import argparse
 from net_helper import net_helper
 from PIL import Image
-from clip_embeding import clip_embeding
+from jina_clip_embeding import clip_embeding
+# from clip_embeding import clip_embeding
 from milvus_operator import text_image_vector
 
 
@@ -16,7 +17,8 @@ def image_search(text):
 
     # clip编码
     imput_embeding = clip_embeding.embeding_text(text)
-    imput_embeding = imput_embeding[0].detach().cpu().numpy()
+    imput_embeding = imput_embeding[0] # jina-clip
+    # imput_embeding = imput_embeding[0].detach().cpu().numpy()
 
     print("imput_embeding:", imput_embeding)
 
