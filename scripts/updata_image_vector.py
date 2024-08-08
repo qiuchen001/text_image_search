@@ -1,5 +1,5 @@
-# from clip_embeding import clip_embeding
-from jina_clip_embeding import clip_embeding
+from clip_embeding import clip_embeding
+# from jina_clip_embeding import clip_embeding
 from milvus_operator import text_image_vector, MilvusOperator
 from PIL import Image
 import os
@@ -14,12 +14,12 @@ def update_image_vector(data_path, operator: MilvusOperator):
         for file in os.listdir(sub_dir):
 
             image = Image.open(os.path.join(sub_dir, file)).convert('RGB')
-            embeding = clip_embeding.embeding_image([image]) # jina-clip
-            # embeding = clip_embeding.embeding_image(image)
+            # embeding = clip_embeding.embeding_image([image]) # jina-clip
+            embeding = clip_embeding.embeding_image(image)
 
             idxs.append(total_count)
-            embedings.append(embeding[0].tolist()) # jina-clip
-            # embedings.append(embeding[0].detach().cpu().numpy().tolist())
+            # embedings.append(embeding[0].tolist()) # jina-clip
+            embedings.append(embeding[0].detach().cpu().numpy().tolist())
 
             paths.append(os.path.join(sub_dir, file))
             total_count += 1

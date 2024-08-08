@@ -1,6 +1,8 @@
 
 import torch
-import clip
+# import cn_clip.clip as clip
+import cn_clip.clip as clip
+from cn_clip.clip import load_from_name, available_models
 from PIL import Image
 from torchvision import transforms
 
@@ -9,7 +11,11 @@ class ClipEmbeding:
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     def __init__(self):
-        self.model, self.processor = clip.load(r"E:\workspace\ai-ground\models\ViT-L-14-336px.pt", device=self.device)
+        # self.model, self.processor = clip.load(r"E:\workspace\ai-ground\models\ViT-L-14-336px.pt", device=self.device) # open-ai-clip
+
+        self.model, self.processor = load_from_name("ViT-L-14-336", device=self.device, download_root='./') # chinese-clip
+        self.model.eval() # chinese-clip
+
         self.tokenizer = clip.tokenize
 
         self.transform = transforms.Compose([transforms.Resize((224, 224)),
@@ -59,16 +65,22 @@ clip_embeding = ClipEmbeding()
 
 
 if __name__ == "__main__":
-    image_path = 'data/cat.jpg'
+    image_path = 'data/21487e8e0970dd366dafaed6ab25d8d8.jpg'
 
     pil_image = Image.open(image_path)
-    clip_embeding.probs(pil_image)
+    # clip_embeding.probs(pil_image)
 
-    match = clip_embeding.match(pil_image, "a cat")
-    print(match)
+    # match = clip_embeding.match(pil_image, "a cat")
+    # print(match)
 
-    embeding = clip_embeding.embeding_image(pil_image)
-    print(len(embeding[0]))
+    image_embeddings = clip_embeding.embeding_image(pil_image)
+    print(len(image_embeddings[0]))
 
-    embeding = clip_embeding.embeding_text("a cat")
-    print(len(embeding[0]))
+    # res = image_embeddings[0].detach().numpy().tolist()
+    #
+    # print(type(res))
+    #
+    # print(res)
+
+    # embeding = clip_embeding.embeding_text("a cat")
+    # print(len(embeding[0]))
