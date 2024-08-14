@@ -1,4 +1,3 @@
-
 import torch
 # import cn_clip.clip as clip
 import cn_clip.clip as clip
@@ -14,13 +13,18 @@ class ClipEmbeding:
         # self.model, self.processor = clip.load(r"E:\workspace\ai-ground\models\ViT-L-14-336px.pt", device=self.device) # open-ai-clip
 
         self.model, self.processor = load_from_name("ViT-L-14-336", device=self.device, download_root='./') # chinese-clip
-        self.model.eval() # chinese-clip
+        # self.model, self.processor = load_from_name(r"E:\workspace\ai-ground\models\ViT-L-14-336px.pt",
+        #                                             device=self.device, vision_model_name="ViT-L-14-336",
+        #                                             text_model_name="RoBERTa-wwm-ext-base-chinese",
+        #                                             input_resolution=224)  # chinese-clip
+        self.model.eval()  # chinese-clip
 
         self.tokenizer = clip.tokenize
 
         self.transform = transforms.Compose([transforms.Resize((224, 224)),
                                              transforms.ToTensor(),
-                                             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+                                             transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                  std=[0.229, 0.224, 0.225])])
 
     def probs(self, image: Image):
         process_image = self.processor(image).unsqueeze(0).to(self.device)
@@ -62,7 +66,6 @@ class ClipEmbeding:
 
 
 clip_embeding = ClipEmbeding()
-
 
 if __name__ == "__main__":
     image_path = 'data/21487e8e0970dd366dafaed6ab25d8d8.jpg'
