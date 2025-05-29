@@ -11,7 +11,7 @@ index_params = {
 
 collection = Collection("text_image_vector_v2")
 collection.create_index(
-  field_name="embeding",
+  field_name="embedding",
   index_params=index_params
 )
 

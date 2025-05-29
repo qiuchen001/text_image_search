@@ -17,11 +17,11 @@ collection.load()
 
 results = collection.search(
     data=[np.random.normal(0, 0.1, 768).tolist()],
-    anns_field="embeding",
+    anns_field="embedding",
     param=search_params,
     limit=16,
     expr=None,
-    # output_fields=['m_id', 'embeding', 'desc', 'count'],
+    # output_fields=['m_id', 'embedding', 'desc', 'count'],
     output_fields=['m_id', 'desc', 'count'],
     consistency_level="Strong"
 )

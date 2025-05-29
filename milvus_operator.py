@@ -13,7 +13,7 @@ class MilvusOperator:
         collection = Collection(self.coll_name)
         mr = collection.insert(data)
 
-    def search_data(self, embeding):
+    def search_data(self, embedding):
         collection = Collection(self.coll_name)
         collection.load()
 
@@ -25,8 +25,8 @@ class MilvusOperator:
         }
 
         results = collection.search(
-            data=[embeding],
-            anns_field="embeding",
+            data=[embedding],
+            anns_field="embedding",
             param=search_params,
             limit=16,
             expr=None,
@@ -56,7 +56,7 @@ class MilvusOperator:
             expr=query_expr,
             offset=0,
             limit=16384,
-            output_fields=["m_id", "embeding", "path"],
+            output_fields=["m_id", "embedding", "path"],
         )
 
         return res

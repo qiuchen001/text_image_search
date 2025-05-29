@@ -95,7 +95,7 @@ def load_from_name(name: str, device: Union[str, torch.device] = "cuda" if torch
 
     with open(model_path, 'rb') as opened_file:
         # loading saved checkpoint
-        checkpoint = torch.load(opened_file, map_location="cpu")
+        checkpoint = torch.load(opened_file, map_location="cpu", weights_only=False)
 
     model = create_model(model_name, checkpoint)
     if str(device) == "cpu":

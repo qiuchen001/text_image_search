@@ -6,11 +6,11 @@ conn = connections.connect(host="10.66.12.37", port=19530)
 db.using_database("text_image_db")
 
 m_id = FieldSchema(name="m_id", dtype=DataType.INT64, is_primary=True,)
-embeding = FieldSchema(name="embeding", dtype=DataType.FLOAT_VECTOR, dim=512,)
+embedding = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=512,)
 path = FieldSchema(name="path", dtype=DataType.VARCHAR, max_length=256,)
 schema = CollectionSchema(
-  fields=[m_id, embeding, path],
-  description="text to image embeding search",
+  fields=[m_id, embedding, path],
+  description="text to image embedding search",
   enable_dynamic_field=True
 )
 
