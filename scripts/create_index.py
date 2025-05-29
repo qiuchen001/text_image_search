@@ -9,10 +9,10 @@ index_params = {
   "params": {"nlist": 1024}
 }
 
-collection = Collection("text_image_vector")
+collection = Collection("text_image_vector_v2")
 collection.create_index(
   field_name="embeding",
   index_params=index_params
 )
 
-utility.index_building_progress("text_image_vector")
+utility.index_building_progress("text_image_vector_v2")
