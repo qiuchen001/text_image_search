@@ -16,13 +16,13 @@ def image_search(text):
     # text = 'one apple'
 
     # clip编码
-    imput_embeding = clip_embeding.embeding_text(text)
-    # imput_embeding = imput_embeding[0] # jina-clip
-    imput_embeding = imput_embeding[0].detach().cpu().numpy()
+    input_embedding = clip_embeding.embeding_text(text)
+    # input_embedding = input_embedding[0] # jina-clip
+    input_embedding = input_embedding[0].detach().cpu().numpy()
 
-    print("imput_embeding:", imput_embeding)
+    print("input_embedding:", input_embedding)
 
-    results = text_image_vector.search_data(imput_embeding)
+    results = text_image_vector.search_data(input_embedding)
 
     print("results:", results)
 
