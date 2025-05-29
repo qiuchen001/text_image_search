@@ -1,6 +1,6 @@
 from pymilvus import Collection, utility, connections, db
 
-conn = connections.connect(host="10.66.12.37", port=19530)
+conn = connections.connect(host="10.66.8.51", port=19530)
 db.using_database("text_image_db")
 
 index_params = {
@@ -9,10 +9,10 @@ index_params = {
   "params": {"nlist": 1024}
 }
 
-collection = Collection("text_image_vector_v2")
+collection = Collection("text_image_vector")
 collection.create_index(
   field_name="embedding",
   index_params=index_params
 )
 
-utility.index_building_progress("text_image_vector_v2")
+utility.index_building_progress("text_image_vector")

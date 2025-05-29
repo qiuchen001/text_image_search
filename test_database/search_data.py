@@ -1,7 +1,7 @@
 from pymilvus import Collection, db, connections
 import numpy as np
 
-conn = connections.connect(host="10.66.12.37", port=19530)
+conn = connections.connect(host="10.66.8.51", port=19530)
 db.using_database("text_image_db")
 coll_name = 'text_image_vector'
 

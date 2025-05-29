@@ -2,11 +2,11 @@ from pymilvus import CollectionSchema, FieldSchema, DataType
 from pymilvus import Collection, db, connections
 
 
-conn = connections.connect(host="10.66.12.37", port=19530)
+conn = connections.connect(host="10.66.8.51", port=19530)
 db.using_database("text_image_db")
 
 m_id = FieldSchema(name="m_id", dtype=DataType.INT64, is_primary=True,)
-embedding = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=512,)
+embedding = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=768,)
 path = FieldSchema(name="path", dtype=DataType.VARCHAR, max_length=256,)
 schema = CollectionSchema(
   fields=[m_id, embedding, path],
@@ -14,5 +14,5 @@ schema = CollectionSchema(
   enable_dynamic_field=True
 )
 
-collection_name = "text_image_vector_v2"
+collection_name = "text_image_vector"
 collection = Collection(name=collection_name, schema=schema, using='default', shards_num=2)
