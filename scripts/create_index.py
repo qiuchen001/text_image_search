@@ -4,7 +4,7 @@ conn = connections.connect(host="10.66.8.51", port=19530)
 db.using_database("text_image_db")
 
 index_params = {
-  "metric_type": "IP",
+  "metric_type": "COSINE",
   "index_type": "IVF_FLAT",
   "params": {"nlist": 1024}
 }

@@ -72,4 +72,4 @@ class MilvusOperator:
         return
 
 
-text_image_vector = MilvusOperator('text_image_db', 'text_image_vector', 'IP')
+text_image_vector = MilvusOperator('text_image_db', 'text_image_vector', 'COSINE')

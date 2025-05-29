@@ -6,7 +6,7 @@ db.using_database("text_image_db")
 coll_name = 'text_image_vector'
 
 search_params = {
-    "metric_type": 'IP',
+    "metric_type": 'IVF_FLAT',
     "offset": 0,
     "ignore_growing": False,
     "params": {"nprobe": 16}
