@@ -20,7 +20,7 @@ def image_search(text):
     # input_embedding = input_embedding[0] # jina-clip
     input_embedding = input_embedding[0].detach().cpu().numpy()
 
-    print("input_embedding:", input_embedding)
+    # print("input_embedding:", input_embedding)
 
     results = text_image_vector.search_data(input_embedding)
 
