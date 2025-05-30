@@ -14,12 +14,17 @@ def generate():
     with open('demo.jpg', 'rb') as f:
         image_bytes = f.read()
 
+    # 读取JSON文件
+    json_path = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_labels\bdd100k\labels\100k\train\0000f77c-62c2a288.json"
+    with open(json_path, 'r', encoding='utf-8') as f:
+        json_data = json.load(f)
+
     model = "gemini-2.5-pro-preview-05-06"
     contents = [
         types.Content(
             role="user",
             parts=[
-                types.Part.from_text(text="""INSERT_INPUT_HERE"""),
+                types.Part.from_text(text=json.dumps(json_data, ensure_ascii=False)),
             ],
         ),
 
