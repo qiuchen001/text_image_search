@@ -53,7 +53,11 @@ def process_single_file(json_path, image_path, client):
         print(item)
 
 
-def generate():
+def generate(max_files=None):
+    """
+    处理BDD100K数据集中的文件
+    :param max_files: 要处理的最大文件数量，None表示处理所有文件
+    """
     client = genai.Client(
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
@@ -64,13 +68,22 @@ def generate():
 
     # 获取所有JSON文件
     json_files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
+    
+    # 如果指定了最大文件数，则限制处理数量
+    if max_files is not None:
+        json_files = json_files[:max_files]
+    
+    total_files = len(json_files)
+    print(f"开始处理，共 {total_files} 个文件")
 
     # 处理每个JSON文件
-    for json_file in json_files:
-        json_path = os.path.join(json_dir, json_file)
+    for idx, json_file in enumerate(json_files, 1):
+.        json_path = os.path.join(json_dir, json_file)
         # 从JSON文件名中获取图片名称（去掉.json后缀）
         image_name = os.path.splitext(json_file)[0]
         image_path = os.path.join(image_dir, f"{image_name}.jpg")
+
+        print(f"\n[{idx}/{total_files}] 正在处理: {json_file}")
 
         if os.path.exists(image_path):
             try:
@@ -82,4 +95,5 @@ def generate():
 
 
 if __name__ == "__main__":
-    generate()
+    # 这里可以指定要处理的文件数量，例如处理前5个文件
+    generate(max_files=5)
