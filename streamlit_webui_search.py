@@ -99,7 +99,7 @@ def image_search(text: str, num_results: int = 16):
 
             # 准备数据
             pil_images = [Image.open(result['path']) for result in results]
-            scores = [result.get('score', 0) for result in results]
+            scores = [result.get('distance', 0) for result in results]
 
             # 创建结果DataFrame
             results_df = pd.DataFrame({

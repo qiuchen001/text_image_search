@@ -62,6 +62,25 @@ class ClipEmbedding:
         text_features = self.model.encode_text(text)
         return image_features, text_features
 
+    def similarity(self, image: Image, text: str) -> float:
+        """
+        计算图片和文本的相似度分数，返回归一化后特征的余弦相似度（float）。
+        """
+        process_image = self.processor(image).unsqueeze(0).to(self.device)
+        text_tensor = self.tokenizer([text]).to(self.device)
+
+        with torch.no_grad():
+            image_features = self.model.encode_image(process_image)
+            text_features = self.model.encode_text(text_tensor)
+
+            # 归一化
+            image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+            text_features = text_features / text_features.norm(dim=-1, keepdim=True)
+
+            # 计算余弦相似度
+            similarity = (image_features @ text_features.T).item()
+        return similarity
+
 
 clip_embedding = ClipEmbedding()
 
@@ -74,8 +93,8 @@ if __name__ == "__main__":
     # match = clip_embedding.match(pil_image, "a cat")
     # print(match)
 
-    image_embeddings = clip_embedding.embedding_image(pil_image)
-    print(len(image_embeddings[0]))
+    # image_embeddings = clip_embedding.embedding_image(pil_image)
+    # print(len(image_embeddings[0]))
 
     # res = image_embeddings[0].detach().numpy().tolist()
     #
@@ -85,3 +104,30 @@ if __name__ == "__main__":
 
     # embedding = clip_embedding.embedding_text("a cat")
     # print(len(embedding[0]))
+
+    # 将 image_path
+
+    text_list = [
+        "a cat",
+        "a dog",
+        "a car",
+    ]
+
+    image_paths = [
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\1.jpg",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\2.jpg",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\3.jpg",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\4.jpg",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\5.jpg",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\6.png",
+        r"E:\playground\ai\projects\51sim-ai\models\resources\images\7.jpeg",
+    ]
+
+    text = "人行横道"
+    scores = [clip_embedding.similarity(Image.open(image_path), text) for image_path in image_paths]
+    print(scores)
+
+
+    # text = 'aaa'
+    # score = clip_embedding.similarity(pil_image, text)
+    # print(score)
