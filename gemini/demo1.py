@@ -51,6 +51,8 @@ def process_single_file(json_path, image_path, client):
     print(f"\n处理文件: {os.path.basename(json_path)}")
     for item in short_caption_list:
         print(item)
+    
+    return short_caption_list
 
 
 def generate(max_files=None):
@@ -65,6 +67,7 @@ def generate(max_files=None):
     # 设置路径
     json_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_labels\bdd100k\labels\100k\train"
     image_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images_bak\bdd100k\images\100k\train"
+    output_file = "bdd100k_captions.jsonl"
 
     # 获取所有JSON文件
     json_files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
@@ -76,22 +79,37 @@ def generate(max_files=None):
     total_files = len(json_files)
     print(f"开始处理，共 {total_files} 个文件")
 
-    # 处理每个JSON文件
-    for idx, json_file in enumerate(json_files, 1):
-.        json_path = os.path.join(json_dir, json_file)
-        # 从JSON文件名中获取图片名称（去掉.json后缀）
-        image_name = os.path.splitext(json_file)[0]
-        image_path = os.path.join(image_dir, f"{image_name}.jpg")
+    # 打开输出文件
+    with open(output_file, 'w', encoding='utf-8') as f:
+        # 处理每个JSON文件
+        for idx, json_file in enumerate(json_files, 1):
+            json_path = os.path.join(json_dir, json_file)
+            # 从JSON文件名中获取图片名称（去掉.json后缀）
+            image_name = os.path.splitext(json_file)[0]
+            image_path = os.path.join(image_dir, f"{image_name}.jpg")
 
-        print(f"\n[{idx}/{total_files}] 正在处理: {json_file}")
+            print(f"\n[{idx}/{total_files}] 正在处理: {json_file}")
 
-        if os.path.exists(image_path):
-            try:
-                process_single_file(json_path, image_path, client)
-            except Exception as e:
-                print(f"处理文件 {json_file} 时出错: {str(e)}")
-        else:
-            print(f"找不到对应的图片文件: {image_path}")
+            if os.path.exists(image_path):
+                try:
+                    short_caption_list = process_single_file(json_path, image_path, client)
+                    
+                    # 创建输出数据
+                    output_data = {
+                        "imageId": image_name,
+                        "short_caption_list": short_caption_list
+                    }
+                    
+                    # 写入JSONL文件
+                    f.write(json.dumps(output_data, ensure_ascii=False) + '\n')
+                    f.flush()  # 确保数据立即写入文件
+                    
+                except Exception as e:
+                    print(f"处理文件 {json_file} 时出错: {str(e)}")
+            else:
+                print(f"找不到对应的图片文件: {image_path}")
+
+    print(f"\n处理完成，结果已保存到: {output_file}")
 
 
 if __name__ == "__main__":
