@@ -6,20 +6,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def generate():
-    client = genai.Client(
-        api_key=os.environ.get("GEMINI_API_KEY"),
-    )
-
-    # 读取图片文件
-    image_path = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images_bak\bdd100k\images\100k\train\0000f77c-62c2a288.jpg"
-    with open(image_path, 'rb') as f:
-        image_bytes = f.read()
-
+def process_single_file(json_path, image_path, client):
     # 读取JSON文件
-    json_path = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_labels\bdd100k\labels\100k\train\0000f77c-62c2a288.json"
     with open(json_path, 'r', encoding='utf-8') as f:
         json_data = json.load(f)
+
+    # 读取图片文件
+    with open(image_path, 'rb') as f:
+        image_bytes = f.read()
 
     model = "gemini-2.5-pro-preview-05-06"
     contents = [
@@ -29,7 +23,6 @@ def generate():
                 types.Part.from_text(text=json.dumps(json_data, ensure_ascii=False)),
             ],
         ),
-
         types.Part.from_bytes(
             data=image_bytes,
             mime_type='image/jpeg',
@@ -55,8 +48,37 @@ def generate():
     )
 
     short_caption_list = json.loads(response.text)
+    print(f"\n处理文件: {os.path.basename(json_path)}")
     for item in short_caption_list:
         print(item)
+
+
+def generate():
+    client = genai.Client(
+        api_key=os.environ.get("GEMINI_API_KEY"),
+    )
+
+    # 设置路径
+    json_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_labels\bdd100k\labels\100k\train"
+    image_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images_bak\bdd100k\images\100k\train"
+
+    # 获取所有JSON文件
+    json_files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
+
+    # 处理每个JSON文件
+    for json_file in json_files:
+        json_path = os.path.join(json_dir, json_file)
+        # 从JSON文件名中获取图片名称（去掉.json后缀）
+        image_name = os.path.splitext(json_file)[0]
+        image_path = os.path.join(image_dir, f"{image_name}.jpg")
+
+        if os.path.exists(image_path):
+            try:
+                process_single_file(json_path, image_path, client)
+            except Exception as e:
+                print(f"处理文件 {json_file} 时出错: {str(e)}")
+        else:
+            print(f"找不到对应的图片文件: {image_path}")
 
 
 if __name__ == "__main__":
