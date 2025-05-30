@@ -11,7 +11,9 @@ def generate():
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
 
-    with open('demo.jpg', 'rb') as f:
+    # 读取图片文件
+    image_path = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images_bak\bdd100k\images\100k\train\0000f77c-62c2a288.jpg"
+    with open(image_path, 'rb') as f:
         image_bytes = f.read()
 
     # 读取JSON文件
