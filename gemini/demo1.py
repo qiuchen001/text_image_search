@@ -55,6 +55,22 @@ def process_single_file(json_path, image_path, client):
     return short_caption_list
 
 
+def get_processed_images(output_file):
+    """
+    获取已经处理过的图片ID列表
+    """
+    processed_images = set()
+    if os.path.exists(output_file):
+        with open(output_file, 'r', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    data = json.loads(line.strip())
+                    processed_images.add(data['imageId'])
+                except json.JSONDecodeError:
+                    continue
+    return processed_images
+
+
 def generate(max_files=None):
     """
     处理BDD100K数据集中的文件
@@ -69,18 +85,29 @@ def generate(max_files=None):
     image_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images_bak\bdd100k\images\100k\train"
     output_file = "bdd100k_captions.jsonl"
 
+    # 获取已处理的图片ID
+    processed_images = get_processed_images(output_file)
+    print(f"已处理图片数量: {len(processed_images)}")
+
     # 获取所有JSON文件
     json_files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
+    
+    # 过滤掉已处理的文件（统一使用不带后缀的文件名进行比较）
+    json_files = [f for f in json_files if os.path.splitext(f)[0] not in processed_images]
     
     # 如果指定了最大文件数，则限制处理数量
     if max_files is not None:
         json_files = json_files[:max_files]
     
     total_files = len(json_files)
-    print(f"开始处理，共 {total_files} 个文件")
+    print(f"待处理文件数量: {total_files}")
 
-    # 打开输出文件
-    with open(output_file, 'w', encoding='utf-8') as f:
+    if total_files == 0:
+        print("没有需要处理的文件")
+        return
+
+    # 打开输出文件（追加模式）
+    with open(output_file, 'a', encoding='utf-8') as f:
         # 处理每个JSON文件
         for idx, json_file in enumerate(json_files, 1):
             json_path = os.path.join(json_dir, json_file)
