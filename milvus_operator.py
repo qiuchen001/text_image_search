@@ -13,7 +13,7 @@ class MilvusOperator:
         collection = Collection(self.coll_name)
         mr = collection.insert(data)
 
-    def search_data(self, embedding):
+    def search_data(self, embedding, limit=16):
         collection = Collection(self.coll_name)
         collection.load()
 
@@ -21,7 +21,7 @@ class MilvusOperator:
             "metric_type": self.metric_type,
             "offset": 0,
             "ignore_growing": False,
-            "params": {"nprobe": 16}
+            "params": {"nprobe": limit}
         }
 
         results = collection.search(
