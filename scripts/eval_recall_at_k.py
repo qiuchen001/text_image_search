@@ -34,4 +34,4 @@ def eval_text2image_timeofday_recall_at_k(label_jsonl_path, operator, k=5, query
 
 if __name__ == '__main__':
     label_jsonl_path = 'bdd100k_labels_timeofday.jsonl'
-    eval_text2image_timeofday_recall_at_k(label_jsonl_path, text_image_vector, k=5, query_time='daytime')
+    eval_text2image_timeofday_recall_at_k(label_jsonl_path, text_image_vector, k=5, query_time='白天')
