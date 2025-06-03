@@ -92,7 +92,6 @@ def image_search(text: str, num_results: int = 16):
 
             # 搜索图片
             results = text_image_vector.search_data(input_embedding, limit=num_results)
-
             if not results:
                 st.error("未找到匹配的图片！")
                 return None, None
@@ -142,7 +141,7 @@ def main():
                 label="显示行数",
                 value=4,
                 min_value=1,
-                max_value=8,
+                max_value=100,
                 step=1
             )
 

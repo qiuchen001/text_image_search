@@ -10,6 +10,8 @@ def update_image_vector(data_path, operator: MilvusOperator):
 
     total_count = 0
     for dir_name in os.listdir(data_path):
+        if dir_name != 'train':
+            continue
         sub_dir = os.path.join(data_path, dir_name)
         for file in os.listdir(sub_dir):
 
@@ -40,6 +42,5 @@ def update_image_vector(data_path, operator: MilvusOperator):
 
 
 if __name__ == '__main__':
-    data_dir = r'E:\workspace\ai-ground\dataset\traffic'
+    data_dir = r'E:\playground\ai\datasets\bdd100k\100K\bdd100k_images\bdd100k\images\100k'
     update_image_vector(data_dir, text_image_vector)
-

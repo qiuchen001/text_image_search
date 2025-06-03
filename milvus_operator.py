@@ -28,7 +28,7 @@ class MilvusOperator:
             data=[embedding],
             anns_field="embedding",
             param=search_params,
-            limit=16,
+            limit=limit,
             expr=None,
             output_fields=['m_id', 'path'],
             consistency_level="Strong"
