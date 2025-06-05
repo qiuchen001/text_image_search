@@ -238,4 +238,4 @@ def generate(max_files=None, num_processes=None):
 
 if __name__ == "__main__":
     # 这里可以指定要处理的文件数量和进程数
-    generate(max_files=1000, num_processes=8)  # 使用4个进程处理1000个文件
+    generate(max_files=10, num_processes=8)  # 使用4个进程处理1000个文件

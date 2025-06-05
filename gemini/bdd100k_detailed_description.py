@@ -261,7 +261,7 @@ def generate(max_files=None, num_processes=None):
     # 设置路径
     json_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_labels\bdd100k\labels\100k\train"
     image_dir = r"E:\playground\ai\datasets\bdd100k\100K\bdd100k_images\bdd100k\images\100k\train"
-    output_file = "bdd100k_driving_environment_description.jsonl"
+    output_file = "bdd100k_detailed_description.jsonl"
     image_ids_txt = "bdd100k_image_ids.txt"
 
     # 读取 imageId 列表
