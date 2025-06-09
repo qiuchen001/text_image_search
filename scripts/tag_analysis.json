@@ -1,0 +1,63 @@
+{
+    "objects": {
+        "total_categories": 21,
+        "distribution": {
+            "car": 69201,
+            "area/drivable": 63961,
+            "traffic sign": 57243,
+            "lane/road curb": 56059,
+            "lane/single white": 51842,
+            "traffic light": 39279,
+            "area/alternative": 36413,
+            "lane/crosswalk": 25637,
+            "person": 22104,
+            "truck": 18915,
+            "lane/double yellow": 15233,
+            "lane/single yellow": 10020,
+            "bus": 9003,
+            "bike": 4350,
+            "rider": 3590,
+            "lane/double white": 2501,
+            "motor": 2284,
+            "train": 105,
+            "lane/single other": 94,
+            "lane/double other": 13,
+            "area/unknown": 2
+        }
+    },
+    "attributes": {
+        "weather": {
+            "total_categories": 7,
+            "distribution": {
+                "clear": 37412,
+                "overcast": 8784,
+                "undefined": 8134,
+                "snowy": 5571,
+                "rainy": 5083,
+                "partly cloudy": 4886,
+                "foggy": 130
+            }
+        },
+        "scene": {
+            "total_categories": 7,
+            "distribution": {
+                "city street": 43581,
+                "highway": 17414,
+                "residential": 8105,
+                "parking lot": 378,
+                "undefined": 366,
+                "tunnel": 129,
+                "gas stations": 27
+            }
+        },
+        "timeofday": {
+            "total_categories": 4,
+            "distribution": {
+                "daytime": 36800,
+                "night": 28028,
+                "dawn/dusk": 5033,
+                "undefined": 139
+            }
+        }
+    }
+}
